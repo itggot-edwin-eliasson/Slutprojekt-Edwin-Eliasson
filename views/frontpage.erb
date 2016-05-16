@@ -1,0 +1,105 @@
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">ToDo-list</span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+        <div class="buttons">
+            <button id="show-login-dialog" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+                Login
+            </button>
+            <button id="show-register-dialog" class="mdl-button mdl-js-button mdl-button--raised dialog-button">
+                Register
+            </button>
+        </div>
+    </div>
+  </header>
+  <main class="mdl-layout__content">
+    <div class="page-content"><!-- Your content goes here --></div>
+  </main>
+</div>
+
+<dialog id="login-dialog" class="mdl-dialog">
+    <div class="mdl-dialog__actions">
+        <button id="button" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored close">
+            <i class="material-icons">clear</i>
+        </button>
+    </div>
+    <h3 class="mdl-dialog__title">Login</h3>
+    <div class="mdl-dialog__content">
+        <form action="/login" method="post">
+            <div class="mdl-textfield mdl-js-textfield">
+                <input type="email" name="email"class="mdl-textfield__input" type="text" id="email">
+                <label type="password" class="mdl-textfield__label" for="email">E-mail address..</label>
+                <span class="mdl-textfield__error">Input is not valid!</span>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input name="password" class="mdl-textfield__input" type="password" id="password">
+                <label class="mdl-textfield__label" for="password">Password..</label>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button class="mld-button mdl-js-button mdl-button--raised">Login</button>
+            </div>
+        </form>
+    </div>
+</dialog>
+
+<dialog id="register-dialog" class="mdl-dialog">
+    <div class="mdl-dialog__actions">
+        <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored close">
+            <i class="material-icons">clear</i>
+        </button>
+    </div>
+    <h3 class="mdl-dialog__title">Register</h3>
+    <div class="mdl-dialog__content">
+        <form action="/register" method="post">
+            <div class="mdl-textfield mdl-js-textfield">
+                <input type="email" name="reg_email" class="mdl-textfield__input" id="email">
+                <label class="mdl-textfield__label" for="email">E-mail address..</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input name="full_name" class="mdl-textfield__input" type="text" id="name">
+                <label class="mdl-textfield__label" for="name">Full name..</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input name="reg_password" class="mdl-textfield__input" type="password" id="password">
+                <label class="mdl-textfield__label" for="password">Password..</label>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button class="mld-button mdl-js-button mdl-button--raised">Register</button>
+            </div>
+        </form>
+    </div>
+</dialog>
+<script>
+    (function () {
+        var dialog = document.querySelector('#register-dialog');
+        var showDialogButton = document.querySelector('#show-register-dialog');
+        if (! dialog.showModal) {
+            dialogPolyfill.registerDialog(dialog);
+        }
+        showDialogButton.addEventListener('click', function() {
+            dialog.showModal();
+        });
+        dialog.querySelector('.close').addEventListener('click', function() {
+            dialog.close();
+        });
+
+        var modalExample = document.getElementById("login-dialog");
+        var closeButton = modalExample.querySelector('#button');
+        var showButton = document.querySelector('#show-login-dialog');
+        if (! modalExample.showModal) {
+            dialogPolyfill.registerDialog(modalExample);
+        }
+        var closeClickHandler = function(event) {
+            modalExample.close();
+        };
+        var showClickHandler = function(event) {
+            modalExample.showModal();
+        };
+        showButton.addEventListener('click', showClickHandler);
+        closeButton.addEventListener('click', closeClickHandler);
+    })();
+
+</script>
