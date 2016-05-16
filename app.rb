@@ -39,7 +39,8 @@ class App < Sinatra::Base
       user = User.first(uuid: uuid)
       @groups = user.groups
       @lists = user.lists
-
+      @user = user
+      
       erb :logged_in
   end
 end

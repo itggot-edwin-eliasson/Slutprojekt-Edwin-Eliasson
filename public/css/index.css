@@ -99,3 +99,17 @@ dialog + .backdrop {
 ul{
     list-style-type: none;
 }
+
+#person {
+    padding-top: 5px;
+}
+
+.mdl-layout__drawer {
+    border: 0; 
+}
+
+.mdl-mini-footer {
+    width: auto;
+    bottom: 0;
+    position: absolute;
+}

@@ -8,6 +8,12 @@
             <div class="mdl-tooltip" for="add_list">
                 Create New List
             </div>
+            <form class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="add_list">
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input type="text" class="mdl-textfield_input" id="list_name">
+                    <label class="mdl-textfield_label" for="list_name">List name</label>
+                </div>
+            </form>
             <div class="mdl-layout-spacer"></div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
                         mdl-texfield--floating-lable mdl-textfield--align-right">
@@ -28,20 +34,15 @@
             <div class="mdl-tooltip" for="add_group">
                 Create New Group
             </div>
-            <form class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="add_group">
-                <div class="mdl-textfield mdl-js-textfield">
-                    <input type="text" class="mdl-textfield_input" id="group_name">
-                    <label class="mdl-textfield_label" for="group_name">Group name</label>
-                </div>
-            </form>
+
         </span>
 
-        <ul class="collapsible" data-collapsible="accordion">
+        <ul>
             <% if @groups %>
                 <% for group in @groups %>
-                    <li>
-                        <a class="collapsible-header"><%= group.name %></a>
-                        <div class="collapsible-body">
+                    <li id="collapsible">
+                        <div><%= group.name %></div>
+                        <div>
                             <ul>
                                 <% for list in @lists.select{|x| x.group_id == group.id} %>
                                     <li><%= list.name %></li>
@@ -52,7 +53,21 @@
                 <% end %>
             <% end %>
         </ul>
-
+        <footer class="mdl-mini-footer">
+            <div class="mdl-mini-footer__left-section">
+                <div class="mdl-logo">
+                    <i id="person" class="material-icons">person</i>
+                </div>
+                <div class="mdl-logo">
+                    <span><%= @user.full_name %></span>
+                </div>
+                <div class="mdl-logo">
+                    <button class="mdl-button mdl-js-button mdl-button--icon">
+                        <i class=material-icon></i>
+                    </button>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <main class="mdl-layout__content">
@@ -63,10 +78,3 @@
         </div>
     </main>
 </div>
-<script>
-$(document).ready(function(){
-    $('.collapsible').collapsible({
-        accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-    });
-});
-</script>

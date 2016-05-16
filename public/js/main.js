@@ -1,0 +1,4 @@
+$(function(){
+    $('#collapsible').collapsible();
+
+});
