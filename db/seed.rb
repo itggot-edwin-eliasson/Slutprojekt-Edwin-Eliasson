@@ -34,7 +34,7 @@ class Seeder
   end
 
   def self.user
-      User.create(uuid: SecureRandom.uuid, full_name: 'Edwin Eliasson', email: 'hej@gmail.com', password: 'hello')
+      User.create(uuid: SecureRandom.uuid, f_name: 'Edwin', l_name: 'Eliasson', email: 'hej@gmail.com', password: 'hello')
   end
 
 end

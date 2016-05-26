@@ -1,12 +1,21 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title">Lists</span>
-            <button id="show-add-list" class="mdl-button mdl-js-button mdl-button--icon">
+            <a href="/user/<%= @user.uuid %>" class="material-icons back-arrow link--no-styling">arrow_back</a>
+            <span class="mdl-layout-title"><%= @list.name %></span>
+            <button id="show-add-content" class="mdl-button mdl-js-button mdl-button--icon">
                 <i class="material-icons">add</i>
             </button>
-            <div class="mdl-tooltip" for="add_list">
-                Create New List
+            <div class="mdl-layout-spacer"></div>
+            <button id="show-delete-list" class="mdl-button mdl-js-button mdl-button--icon" type="button">
+                <i class="material-icons">delete_forever</i>
+            </button>
+            <div id="snackbar-delete-list" class="mdl-js-snackbar mdl-snackbar">
+                <div class="mdl-snackbar__text"></div>
+                <form action="/delete/<%= @list.name %>" method="post">
+                    <input type="hidden" name="list-name" value="<%= @list.id %>">
+                    <button class="mdl-snackbar__action" type="submit"></button>
+                </form>
             </div>
         </div>
     </header>
@@ -21,7 +30,6 @@
             </div>
         </span>
         <div class="divider"></div>
-
         <ul>
             <% if @groups %>
                 <% for group in @groups %>
@@ -51,7 +59,7 @@
         </ul>
         <ul class="mdl-menu mdl-menu--top-right mdl-js-menu mdl-js-ripple-effect" data-mdl-for="demo-menu-top-right">
             <li class="mdl-menu__item">
-                <a href="#">Delete groups</a>
+                Delete groups
             </li>
             <a href="/logout">
                 <li class="mdl-menu__item">
@@ -75,55 +83,49 @@
             </div>
         </footer>
     </div>
-
     <main class="mdl-layout__content">
         <div class="page-content">
-            <% if @lists.empty? == false %>
+            <% if @content.empty? == false %>
                 <div class="demo-card-wide mdl-card mdl-shadow--4dp">
                     <div class="mdl-card__supporting-text">
                         <ul class="demo-list-icon mdl-list">
-                        <% for list in @lists %>
-                            <li class="mdl-list__item">
-                                <span class="mdl-list__item-primary-content">
-                                    <i class="material-icons mdl-list__item-icon">list</i>
-                                    <h4>
-                                        <a href="/user/<%= @user.uuid %>/<%= list.name %>/content">
-                                            <%= list.name %>
-                                        </a>
-                                    </h4>
-                                </span>
-                            </li>
-                            <div class="list-divider"></div>
-                        <% end %>
+                            <% for content in @content %>
+                                <li class="mdl-list__item">
+                                    <span class="mdl-list__item-primary-content">
+                                        <i class="material-icons mdl-list__item-icon">list</i>
+                                        <h4>
+                                            <%= content.name %>
+                                        </h4>
+                                    </span>
+                                </li>
+                                <div class="list-divider"></div>
+                            <% end %>
                         </ul>
                     </div>
                 </div>
             <% else %>
                 <div class="no-content">
-                    <h2>There's no lists yet. Create one!</h2>
+                    <h2>There's no items yet. Create some!</h2>
                 </div>
             <% end %>
         </div>
     </main>
 </div>
 
-<dialog id="add-list" class="mdl-dialog">
+<dialog id="add-content" class="mdl-dialog">
     <div class="mdl-dialog__actions">
         <button id="button" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored close">
             <i class="material-icons">clear</i>
         </button>
     </div>
-    <h3 class="mdl-dialog__title">New List</h3>
+    <h3 class="mdl-dialog__title">New List Item</h3>
     <div class="mdl-dialog__content">
-        <form action="/new_list" method="post">
+        <form action="/new_content" method="post">
             <div class="mdl-textfield mdl-js-textfield">
-                <input class="mdl-textfield__input" type="text" name="list-name" id="list-name">
-                <label for="list-name" class="mdl-textfield__label">List name...</label>
+                <input class="mdl-textfield__input" type="text" name="content-name" id="content-name">
+                <label for="content-name" class="mdl-textfield__label">Item name...</label>
             </div>
-            <div class="mdl-textfield mdl-js-textfield">
-                <input name="group" class="mdl-textfield__input" type="text" id="group">
-                <label for="group" class="mdl-textfield__label">Add to group...</label>
-            </div>
+            <input type="hidden" name="list-id" value="<%= @list.id %>">
             <div class="mdl-dialog__actions">
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                     Create
@@ -157,9 +159,9 @@
 
 <script>
     (function (){
-        var addList = document.getElementById("add-list")
+        var addList = document.getElementById("add-content")
         var closeButton = addList.querySelector('#button')
-        var showButton = document.querySelector('#show-add-list')
+        var showButton = document.querySelector('#show-add-content')
         if (! addList.showModal) {
             dialogPolyfill.registerDialog(addList);
         }
@@ -183,5 +185,27 @@
         addGroup.querySelector('.close').addEventListener('click', function() {
             addGroup.close();
         });
-    })();
+    }());
+</script>
+<script>
+    (function (){
+        'use strict';
+        var snackbarContainer = document.querySelector('#snackbar-delete-list');
+        var showToastButton = document.querySelector('#show-delete-list');
+        var handler = function(event) {
+            showToastButton = '';
+        }
+        showToastButton.addEventListener('click', function() {
+            'use strict';
+            var data = {
+                message: 'Are you sure you want to delete the list?',
+                timeout: 20000,
+                actionHandler: handler,
+                actionText: 'Yes'
+            };
+            snackbarContainer.MaterialSnackbar.showSnackbar(data);
+        });
+
+    }());
+
 </script>

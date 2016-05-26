@@ -1,4 +1,4 @@
 $(function(){
-    $('#collapsible').collapsible();
+    $('.collapsible').collapsible();
 
 });

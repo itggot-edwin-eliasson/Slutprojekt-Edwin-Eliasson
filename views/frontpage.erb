@@ -30,8 +30,8 @@
     <div class="mdl-dialog__content">
         <form action="/login" method="post">
             <div class="mdl-textfield mdl-js-textfield">
-                <input type="email" name="email"class="mdl-textfield__input" type="text" id="email">
-                <label type="password" class="mdl-textfield__label" for="email">E-mail address..</label>
+                <input type="email" name="email" class="mdl-textfield__input" type="text" id="email">
+                <label class="mdl-textfield__label" for="email">E-mail address..</label>
                 <span class="mdl-textfield__error">Input is not valid!</span>
             </div>
             <div class="mdl-textfield mdl-js-textfield">
@@ -39,7 +39,9 @@
                 <label class="mdl-textfield__label" for="password">Password..</label>
             </div>
             <div class="mdl-dialog__actions">
-                <button class="mld-button mdl-js-button mdl-button--raised">Login</button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    Login
+                </button>
             </div>
         </form>
     </div>
@@ -59,15 +61,21 @@
                 <label class="mdl-textfield__label" for="email">E-mail address..</label>
             </div>
             <div class="mdl-textfield mdl-js-textfield">
-                <input name="full_name" class="mdl-textfield__input" type="text" id="name">
-                <label class="mdl-textfield__label" for="name">Full name..</label>
+                <input name="f_name" class="mdl-textfield__input" type="text" id="f_name">
+                <label class="mdl-textfield__label" for="f_name">First name..</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input name="l_name" class="mdl-textfield__input" type="text" id="l_name">
+                <label class="mdl-textfield__label" for="l_name">Last name..</label>
             </div>
             <div class="mdl-textfield mdl-js-textfield">
                 <input name="reg_password" class="mdl-textfield__input" type="password" id="password">
                 <label class="mdl-textfield__label" for="password">Password..</label>
             </div>
             <div class="mdl-dialog__actions">
-                <button class="mld-button mdl-js-button mdl-button--raised">Register</button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    Register
+                </button>
             </div>
         </form>
     </div>
