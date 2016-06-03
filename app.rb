@@ -100,8 +100,9 @@ class App < Sinatra::Base
       s_user = User.first(email: params['user-email'])
       list_id = params['list_id']
       list = List.get(list_id)
-      Userlisting.create(user_id: s_user.id, list_id: list.id)
-
+      if s_user
+          Userlisting.create(user_id: s_user.id, list_id: list.id)
+      end
       redirect "/user/#{user.uuid}/#{list.name}/content"
   end
 
