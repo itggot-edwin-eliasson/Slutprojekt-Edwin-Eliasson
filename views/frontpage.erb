@@ -47,12 +47,11 @@
     <div class="mdl-dialog__content">
         <form action="/login" method="post">
             <div class="mdl-textfield mdl-js-textfield">
-                <input type="email" name="email" class="mdl-textfield__input" type="text" id="email">
+                <input required="true" type="email" name="email" class="mdl-textfield__input" type="text" id="email">
                 <label class="mdl-textfield__label" for="email">E-mail address..</label>
-                <span class="mdl-textfield__error">Input is not valid!</span>
             </div>
             <div class="mdl-textfield mdl-js-textfield">
-                <input name="password" class="mdl-textfield__input" type="password" id="password">
+                <input required="true" name="password" class="mdl-textfield__input" type="password" id="password">
                 <label class="mdl-textfield__label" for="password">Password..</label>
             </div>
             <div class="mdl-dialog__actions">
@@ -74,19 +73,19 @@
     <div class="mdl-dialog__content">
         <form action="/register" method="post">
             <div class="mdl-textfield mdl-js-textfield">
-                <input type="email" name="reg_email" class="mdl-textfield__input" id="email">
+                <input required="true" type="email" name="reg_email" class="mdl-textfield__input" id="email">
                 <label class="mdl-textfield__label" for="email">E-mail address..</label>
             </div>
             <div class="mdl-textfield mdl-js-textfield">
-                <input name="f_name" class="mdl-textfield__input" type="text" id="f_name">
+                <input required="true" name="f_name" class="mdl-textfield__input" type="text" id="f_name">
                 <label class="mdl-textfield__label" for="f_name">First name..</label>
             </div>
             <div class="mdl-textfield mdl-js-textfield">
-                <input name="l_name" class="mdl-textfield__input" type="text" id="l_name">
+                <input requred="true" name="l_name" class="mdl-textfield__input" type="text" id="l_name">
                 <label class="mdl-textfield__label" for="l_name">Last name..</label>
             </div>
             <div class="mdl-textfield mdl-js-textfield">
-                <input name="reg_password" class="mdl-textfield__input" type="password" id="password">
+                <input required="true" name="reg_password" class="mdl-textfield__input" type="password" id="password">
                 <label class="mdl-textfield__label" for="password">Password..</label>
             </div>
             <div class="mdl-dialog__actions">

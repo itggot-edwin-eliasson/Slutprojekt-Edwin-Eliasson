@@ -95,6 +95,16 @@ class App < Sinatra::Base
       redirect "/user/#{user.uuid}/#{list.name}/content"
   end
 
+  post '/user/share_user' do
+      user = User.get(session[:id])
+      s_user = User.first(email: params['user-email'])
+      list_id = params['list_id']
+      list = List.get(list_id)
+      Userlisting.create(user_id: s_user.id, list_id: list.id)
+
+      redirect "/user/#{user.uuid}/#{list.name}/content"
+  end
+
   post '/check_off' do
       user = User.get(session[:id])
       content_id = params['content-id']
@@ -102,16 +112,6 @@ class App < Sinatra::Base
       content = Content.get(content_id)
       list = List.get(list_id)
       content.update(check: true)
-
-      redirect "/user/#{user.uuid}/#{list.name}/content"
-  end
-
-  post '/user/share_user' do
-      user = User.get(session[:id])
-      s_user = User.first(email: params['user-email'])
-      list_id = params['list_id']
-      list = List.get(list_id)
-      Userlisting.create(user_id: s_user.id, list_id: list.id)
 
       redirect "/user/#{user.uuid}/#{list.name}/content"
   end
