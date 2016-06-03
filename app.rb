@@ -50,6 +50,7 @@ class App < Sinatra::Base
       user = User.first(id: session[:id])
       name = params['list-name']
       group_name = params['group']
+      share_email = params['share-user']
       if Group.first(name: group_name)
           group = Group.first(name: group_name)
       else
@@ -58,6 +59,10 @@ class App < Sinatra::Base
       end
       list = List.create(name: name, group_id: group.id)
       Userlisting.create(user_id: session[:id], list_id: list.id)
+      if User.first(email: share_email)
+          s_user = User.first(email: share_email)
+          Userlisting.create(user_id: s_user.id, list_id: list.id)
+      end
       redirect "/user/#{user.uuid}"
   end
 
@@ -90,6 +95,38 @@ class App < Sinatra::Base
       redirect "/user/#{user.uuid}/#{list.name}/content"
   end
 
+  post '/check_off' do
+      user = User.get(session[:id])
+      content_id = params['content-id']
+      list_id = params['list-id']
+      content = Content.get(content_id)
+      list = List.get(list_id)
+      content.update(check: true)
+
+      redirect "/user/#{user.uuid}/#{list.name}/content"
+  end
+
+  post '/user/share_user' do
+      user = User.get(session[:id])
+      s_user = User.first(email: params['user-email'])
+      list_id = params['list_id']
+      list = List.get(list_id)
+      Userlisting.create(user_id: s_user.id, list_id: list.id)
+
+      redirect "/user/#{user.uuid}/#{list.name}/content"
+  end
+
+  post '/check_on' do
+      user = User.get(session[:id])
+      content_id = params['content-id']
+      list_id = params['list-id']
+      content = Content.get(content_id)
+      list = List.get(list_id)
+      content.update(check: false)
+
+      redirect "/user/#{user.uuid}/#{list.name}/content"
+  end
+
   post '/delete/:list' do
       user = User.get(session[:id])
       list_id = params['list-name']
@@ -97,6 +134,20 @@ class App < Sinatra::Base
       content = Content.all(list: list)
       content.destroy
       list.destroy!
+
+      redirect "/user/#{user.uuid}"
+  end
+
+  post '/user/delete/groups' do
+      user = User.get(session[:id])
+      group_id = params['group']
+      group = Group.get(group_id)
+      if List.all(group: group)
+          list = List.all(group: group)
+          p list
+          list.destroy!
+      end
+      group.destroy!
 
       redirect "/user/#{user.uuid}"
   end

@@ -10,7 +10,11 @@ class Seeder
   end
 
   def self.content
-      Content.create(name: 'Apple', list_id: 1)
+      Content.create(name: 'Apples', list_id: 1)
+      Content.create(name: 'Carrots', list_id: 1)
+      Content.create(name: 'Oranges', list_id: 1)
+      Content.create(name: 'Tour Eiffel', list_id: 2)
+      Content.create(name: 'Triumphal Arch', list_id: 2)
   end
 
   def self.user_group
@@ -19,13 +23,13 @@ class Seeder
   end
 
   def self.group
+      Group.create(name: 'Shopping')
       Group.create(name: 'Trip')
-      Group.create(name: 'Partay!')
   end
 
   def self.list
-      List.create(name: 'Shopping', group_id: 1)
-      List.create(name: 'Attraction', group_id: 1)
+      List.create(name: 'Groceries', group_id: 1)
+      List.create(name: 'Attraction', group_id: 2)
   end
 
   def self.user_list

@@ -29,8 +29,11 @@
                         <div class="collapsible-group">
                             <%= group.name %>
                             <div class="delete-group">
-                                <form action="#" method="post">
-                                    <i class="material-icons">close</i>
+                                <form action="/user/delete/groups" method="post">
+                                    <input type="hidden" name="group" value="<%= group.id %>">
+                                    <button class="delete-group mdl-button mdl-js-button mdl-button--icon">
+                                        <i class="material-icons">close</i>
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -50,8 +53,8 @@
             <% end %>
         </ul>
         <ul class="mdl-menu mdl-menu--top-right mdl-js-menu mdl-js-ripple-effect" data-mdl-for="demo-menu-top-right">
-            <li class="mdl-menu__item">
-                <a href="#">Delete groups</a>
+            <li id="hide" class="mdl-menu__item">
+                Delete groups
             </li>
             <a href="/logout">
                 <li class="mdl-menu__item">
@@ -123,6 +126,13 @@
             <div class="mdl-textfield mdl-js-textfield">
                 <input name="group" class="mdl-textfield__input" type="text" id="group">
                 <label for="group" class="mdl-textfield__label">Add to group...</label>
+            </div>
+            <p>
+                You can share lists with friends! Write their email-address below to do so!
+            </p>
+            <div class="mdl-textfield mdl-js-textfield">
+                <input name="share-user" class="mdl-textfield__input" type="text" id="share-user">
+                <label for="share-user" class="mdl-textfield__label">Email...</label>
             </div>
             <div class="mdl-dialog__actions">
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
