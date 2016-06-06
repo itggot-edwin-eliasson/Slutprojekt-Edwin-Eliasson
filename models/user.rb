@@ -11,6 +11,5 @@ class User
     has n, :userlistings
     has n, :lists, :through => :userlistings
 
-    has n, :usergroupings
-    has n, :groups, :through => :usergroupings
+    has n, :groups
 end

@@ -6,9 +6,6 @@ class Group
 
     has n, :lists
 
-    has n, :usergroupings
-    has n, :users, :through => :usergroupings
+    belongs_to :user
 
-    has n, :grouptaggings
-    has n, :tags, :through => :grouptaggings
 end

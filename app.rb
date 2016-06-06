@@ -54,8 +54,7 @@ class App < Sinatra::Base
       if Group.first(name: group_name)
           group = Group.first(name: group_name)
       else
-          group = Group.create(name: group_name)
-          Usergrouping.create(user_id: session[:id], group_id: group.id)
+          group = Group.create(name: group_name, user_id: session[:id])
       end
       list = List.create(name: name, group_id: group.id)
       Userlisting.create(user_id: session[:id], list_id: list.id)
@@ -69,8 +68,7 @@ class App < Sinatra::Base
   post '/new_group' do
       user = User.get(session[:id])
       name = params['group-name']
-      group = Group.create(name: name)
-      Usergrouping.create(user_id: session[:id], group_id: group.id)
+      Group.create(name: name, user_id: session[:id])
       redirect "/user/#{user.uuid}"
   end
 
